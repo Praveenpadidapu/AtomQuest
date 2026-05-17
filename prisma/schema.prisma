@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String?
+  name          String
+  role          String    @default("EMPLOYEE") // EMPLOYEE, MANAGER, ADMIN
+  managerId     String?
+  createdAt     DateTime  @default(now())
+
+  manager       User?       @relation("ManagerEmployees", fields: [managerId], references: [id], onDelete: SetNull)
+  employees     User[]      @relation("ManagerEmployees")
+  goalSheets    GoalSheet[]
+}
+
+model GoalSheet {
+  id          String   @id @default(cuid())
+  userId      String
+  cycleYear   String
+  status      String   // DRAFT, PENDING_APPROVAL, APPROVED, REJECTED, LOCKED
+  submittedAt DateTime?
+  approvedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goals     Goal[]
+  checkIns  CheckIn[]
+}
+
+model Goal {
+  id                String   @id @default(cuid())
+  goalSheetId       String
+  title             String
+  description       String
+  thrustArea        String
+  uomType           String   // NUMERIC, PERCENTAGE, TIMELINE, ZERO_BASED
+  target            String
+  actualAchievement String?
+  weightage         Float
+  progress          Float?   @default(0)
+  status            String   // NOT_STARTED, ON_TRACK, COMPLETED
+  createdAt         DateTime @default(now())
+
+  goalSheet GoalSheet @relation(fields: [goalSheetId], references: [id], onDelete: Cascade)
+}
+
+model CheckIn {
+  id              String   @id @default(cuid())
+  goalSheetId     String
+  quarter         String   // Q1, Q2, Q3, Q4
+  employeeComment String?
+  managerComment  String?
+  createdAt       DateTime @default(now())
+
+  goalSheet GoalSheet @relation(fields: [goalSheetId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  entity    String
+  entityId  String
+  action    String
+  changedBy String
+  details   String
+  timestamp DateTime @default(now())
+}

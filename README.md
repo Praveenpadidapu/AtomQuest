@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ATOMQUEST HACKATHON 1.0 - Goal Setting & Tracking Portal
 
-## Getting Started
+A fully functional web-based portal for the full lifecycle of employee goals, from creation and alignment to quarterly check-ins. 
 
-First, run the development server:
+## Features Implemented
+- **Mock Authentication**: Role-based routing (Employee, Manager, Admin).
+- **Employee Workflow**: Goal Creation with real-time Zod validations (100% weight, max 8 goals, min 10%), Quarterly Check-in updates.
+- **Manager Workflow**: Team Check-in Dashboard, Approval Workflow with Inline Edits.
+- **Admin Workflow**: Complete Dashboard metrics, CSV Export functionality.
+- **Bonus Features**: Simulated micro-animations, Premium dark UI, modular design, full backend API structure.
+- **Tech Stack**: Next.js 14 (App Router), React, TypeScript, Prisma, SQLite, Vanilla CSS Modules.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Prerequisites
+- Node.js (v18 or newer)
+- npm
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup & Run Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Initialize Database**
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-## Learn More
+3. **Seed Database** (Populates mock users, goals, and check-ins)
+   ```bash
+   node prisma/seed.js
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Demo Walkthrough**
+   - Open `http://localhost:3000`
+   - Select the **Employee** card to log in as Alice. Observe her locked goal sheet and test the Q2 Check-in functionality.
+   - Logout and select the **Manager** card to log in. Review pending approvals and the team check-in summary.
+   - Logout and select the **Admin** card to view the global dashboard and test the CSV export.
