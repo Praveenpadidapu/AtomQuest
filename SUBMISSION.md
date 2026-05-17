@@ -6,7 +6,7 @@ This document contains the final submission requirements for the **AtomQuest Goa
 
 ## 🔗 1. Working Live Deployment URL
 You can access and test the fully deployed application live on the internet at:
-👉 **[https://atom-quest-cyan.vercel.app](https://atom-quest-cyan.vercel.app)**
+👉 **[https://atom-quest-cyan.vercel.app](https://atom-quest-wuzp.vercel.app/login)**
 
 ---
 
