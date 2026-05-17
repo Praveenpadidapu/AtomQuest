@@ -72,3 +72,27 @@ model AuditLog {
   details   String
   timestamp DateTime @default(now())
 }
+
+model PerformanceCycle {
+  id          String   @id @default(cuid())
+  year        String   @unique
+  isActive    Boolean  @default(false)
+  
+  q1StartDate DateTime?
+  q1EndDate   DateTime?
+  q1Status    String   @default("UPCOMING") // UPCOMING, ACTIVE, CLOSED
+
+  q2StartDate DateTime?
+  q2EndDate   DateTime?
+  q2Status    String   @default("UPCOMING")
+
+  q3StartDate DateTime?
+  q3EndDate   DateTime?
+  q3Status    String   @default("UPCOMING")
+
+  q4StartDate DateTime?
+  q4EndDate   DateTime?
+  q4Status    String   @default("UPCOMING")
+
+  createdAt   DateTime @default(now())
+}

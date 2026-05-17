@@ -9,9 +9,30 @@ async function main() {
   await prisma.checkIn.deleteMany();
   await prisma.goal.deleteMany();
   await prisma.goalSheet.deleteMany();
+  await prisma.performanceCycle.deleteMany();
   await prisma.user.deleteMany();
 
   const hashedPassword = await bcrypt.hash('password123', 10);
+
+  // 0. Create Performance Cycle
+  await prisma.performanceCycle.create({
+    data: {
+      year: '2024',
+      isActive: true,
+      q1StartDate: new Date('2024-01-01'),
+      q1EndDate: new Date('2024-03-31'),
+      q1Status: 'CLOSED',
+      q2StartDate: new Date('2024-04-01'),
+      q2EndDate: new Date('2024-06-30'),
+      q2Status: 'ACTIVE',
+      q3StartDate: new Date('2024-07-01'),
+      q3EndDate: new Date('2024-09-30'),
+      q3Status: 'UPCOMING',
+      q4StartDate: new Date('2024-10-01'),
+      q4EndDate: new Date('2024-12-31'),
+      q4Status: 'UPCOMING',
+    }
+  });
 
   // 1. Create Admin
   const admin = await prisma.user.create({

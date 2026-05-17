@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { FileText, Check, X, Edit2 } from 'lucide-react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { use } from 'react';
+import toast from 'react-hot-toast';
 
 export default function ApprovalReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -44,7 +45,7 @@ export default function ApprovalReviewPage({ params }: { params: Promise<{ id: s
 
   const handleAction = async (data: any, action: 'APPROVED' | 'REJECTED') => {
     if (action === 'APPROVED' && !isValid) {
-      alert('Total weightage must be exactly 100% to approve.');
+      toast.error('Total weightage must be exactly 100% to approve.');
       return;
     }
 
@@ -64,13 +65,14 @@ export default function ApprovalReviewPage({ params }: { params: Promise<{ id: s
       });
 
       if (res.ok) {
+        toast.success(action === 'APPROVED' ? 'Goal sheet approved!' : 'Goal sheet returned for rework.');
         router.push('/approvals');
       } else {
-        alert('Failed to process action.');
+        toast.error('Failed to process action.');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred.');
+      toast.error('An error occurred.');
     }
     setSubmitting(false);
   };

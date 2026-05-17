@@ -7,6 +7,7 @@ import { Plus, Trash2, Save, Send } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const goalSchema = z.object({
   title: z.string().min(3, 'Title is required'),
@@ -66,13 +67,14 @@ export function GoalSheetForm({ initialData = null }: { initialData?: any }) {
       });
 
       if (res.ok) {
+        toast.success(status === 'DRAFT' ? 'Draft saved!' : 'Submitted for approval!');
         router.push('/dashboard');
       } else {
-        alert('Failed to save goal sheet.');
+        toast.error('Failed to save goal sheet.');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred.');
+      toast.error('An error occurred.');
     }
     setSubmitting(false);
   };

@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'In-House Goal Setting & Tracking Portal',
 };
 
+import { Providers } from '@/components/providers';
+
 export default function RootLayout({
   children,
 }: {
@@ -19,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={outfit.variable}>
-        <AuthProvider>
-          <AppLayout>{children}</AppLayout>
-        </AuthProvider>
+        <Providers>
+          <AuthProvider>
+            <AppLayout>{children}</AppLayout>
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { CheckSquare, Save, Target } from 'lucide-react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { calculateProgress } from '@/utils/progress';
 import { use } from 'react';
+import toast from 'react-hot-toast';
 
 export default function EmployeeCheckInPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -22,6 +23,19 @@ export default function EmployeeCheckInPage({ params }: { params: Promise<{ id: 
 
   const { fields } = useFieldArray({ name: 'goals', control });
   const watchGoals = watch('goals');
+  
+  const [activeCycle, setActiveCycle] = useState<any>({ year: '2024', activeQuarter: 'Q2' });
+
+  useEffect(() => {
+    fetch('/api/active-cycle')
+      .then(res => res.json())
+      .then(data => {
+        if (data && !data.error) {
+          setActiveCycle(data);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     fetch(`/api/goalsheets/${resolvedParams.id}`)
@@ -61,7 +75,7 @@ export default function EmployeeCheckInPage({ params }: { params: Promise<{ id: 
     try {
       const payload = {
         goalSheetId: resolvedParams.id,
-        quarter: 'Q2', // Hardcoded for demo purposes
+        quarter: activeCycle.activeQuarter,
         employeeComment: data.employeeComment,
         goals: data.goals.map((g: any) => ({
           id: g.id,
@@ -78,14 +92,14 @@ export default function EmployeeCheckInPage({ params }: { params: Promise<{ id: 
       });
 
       if (res.ok) {
-        alert('Check-in saved successfully!');
+        toast.success('Check-in saved successfully!');
         router.push('/dashboard');
       } else {
-        alert('Failed to save check-in.');
+        toast.error('Failed to save check-in.');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred.');
+      toast.error('An error occurred.');
     }
     setSubmitting(false);
   };
@@ -96,7 +110,7 @@ export default function EmployeeCheckInPage({ params }: { params: Promise<{ id: 
         <CheckSquare size={32} color="var(--accent-color)" />
         <div>
           <h1 className="page-title" style={{ marginBottom: 0 }}>Quarterly Check-in</h1>
-          <p className="page-subtitle" style={{ marginBottom: 0 }}>Update your progress for Q2 2024</p>
+          <p className="page-subtitle" style={{ marginBottom: 0 }}>Update your progress for {activeCycle.activeQuarter} {activeCycle.year}</p>
         </div>
       </div>
 

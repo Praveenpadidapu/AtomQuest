@@ -1,28 +1,33 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 const prisma = new PrismaClient();
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const managerId = searchParams.get('managerId');
-
-    if (!managerId) {
-      return NextResponse.json({ error: 'Manager ID is required' }, { status: 400 });
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get all goal sheets for users managed by this manager
+    const managerId = (session.user as any).id;
+
     const goalSheets = await prisma.goalSheet.findMany({
       where: {
-        user: { managerId },
-        status: { in: ['PENDING_APPROVAL', 'APPROVED', 'LOCKED'] }
+        user: {
+          managerId: managerId
+        }
       },
       include: {
-        user: { select: { name: true, email: true } },
+        user: true,
         goals: true,
+        checkIns: true
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
 
     return NextResponse.json(goalSheets);

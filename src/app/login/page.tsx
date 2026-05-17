@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Shield, Key, Mail, Loader2 } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,19 +26,17 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const res = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
       });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        login(data);
-        router.push('/dashboard');
+      if (res?.error) {
+        setError(res.error);
       } else {
-        setError(data.error || 'Login failed');
+        router.push('/dashboard');
+        router.refresh();
       }
     } catch (err) {
       setError('An error occurred during login');

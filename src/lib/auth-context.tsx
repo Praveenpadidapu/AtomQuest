@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 type User = {
   id: string;
@@ -20,31 +21,18 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    // Check local storage for session
-    const storedUser = localStorage.getItem('atomquest_user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error('Failed to parse user from local storage');
-      }
-    }
-    setIsLoading(false);
-  }, []);
+  const user = session?.user as User | null;
+  const isLoading = status === 'loading';
 
+  // We keep login/logout as no-ops for API, relying on next-auth
   const login = (newUser: User) => {
-    setUser(newUser);
-    localStorage.setItem('atomquest_user', JSON.stringify(newUser));
+    // next-auth handles this via its own sign-in page or API
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('atomquest_user');
-    window.location.href = '/login';
+    signOut({ callbackUrl: '/login' });
   };
 
   return (
