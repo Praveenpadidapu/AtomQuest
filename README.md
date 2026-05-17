@@ -24,9 +24,7 @@ A fully functional web-based portal for the full lifecycle of employee goals, fr
 2. **Configure Environment Variables**
    Create a `.env` file in the root directory (based on `.env.example`) and add the following variables:
    ```env
-   DATABASE_URL="file:./dev.db"
-   NEXTAUTH_SECRET="fallback_secret_for_local_dev"
-   NEXTAUTH_URL="http://localhost:3000"
+  
    ```
 
 3. **Initialize Database**
