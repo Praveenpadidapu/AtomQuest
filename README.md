@@ -65,6 +65,46 @@ A fully functional web-based portal for the full lifecycle of employee goals, fr
 
 ---
 
+## 🏗️ Project Architecture & Folder Structure
+
+The portal is designed using a **modular, scalable architecture** leveraging modern Next.js patterns:
+1. **Client/UI Layer**: Next.js 16 (App Router), React 19, and Vanilla CSS Modules for premium responsive layouts and dynamic styling.
+2. **Auth & Routing Guard**: Stateless JWT sessions with NextAuth.js. Client routes are guarded by a centralized server-side `middleware.ts`.
+3. **Database & ORM**: Prisma ORM mapped to a local SQLite database, using Zod schemas for rigorous validation of input structures.
+
+Below is the directory tree detailing the purposes of each folder in the project:
+
+```
+atomquest-goal-portal/
+├── prisma/                    # Database configurations & seeds
+│   ├── schema.prisma          # SQLite schema mappings (User, Goal, CheckIn, AuditLog)
+│   └── seed.js                # Database seeding script for mock environment
+├── src/
+│   ├── app/                   # App Router: Pages & Server-Side APIs
+│   │   ├── admin/             # Administrative views (Cycles, Users, Reports)
+│   │   ├── api/               # Server-Side API Handlers (REST endpoints)
+│   │   ├── approvals/         # Manager Goal sheets approval flow
+│   │   ├── check-ins/         # Employee & Manager Quarterly Check-in pages
+│   │   ├── dashboard/         # Dynamic role-based dashboard landing
+│   │   ├── goals/             # Goal creation and alignment portal
+│   │   ├── login/             # Credentials authentication page
+│   │   ├── layout.tsx         # Global layout and style wraps
+│   │   └── page.tsx           # Redirect landing entry page
+│   ├── components/            # UI Components grouped by domain
+│   │   ├── common/            # Reusable UI primitives (Buttons, Modals, Cards)
+│   │   ├── goals/             # Interactive Goal sheet cards & forms
+│   │   └── layout/            # Layout wrappers (Sidebar, Headers)
+│   ├── lib/                   # Utility helpers and core validations
+│   │   ├── auth-context.tsx   # React client-side authorization hook
+│   │   ├── prisma.ts          # Singleton Prisma Client constructor
+│   │   └── validations.ts     # Zod-based real-time goal sheet validations
+│   └── middleware.ts          # Route protection and NextAuth access guard
+├── next.config.ts             # Next.js configurations & Serverless NFT tracing
+└── package.json               # Package dependencies & scripts
+```
+
+---
+
 ## 🛠️ Troubleshooting Port Conflicts
 If you see the error:
 `Error: listen EADDRINUSE: address already in use :::3000`
