@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AtomLens Relay</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="AtomLens Relay home">
+        <span class="brand-mark">AL</span>
+        <span>
+          <strong>AtomLens Relay</strong>
+          <small>Owned video support</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="/">Agent Login</a>
+        <a href="/?admin=1">Admin</a>
+        <a href="/docs/architecture.svg" target="_blank" rel="noreferrer">Diagram</a>
+      </nav>
+    </header>
+    <main id="app" class="app-shell" aria-live="polite"></main>
+    <div id="toast" class="toast" hidden></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

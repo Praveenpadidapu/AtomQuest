@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
+  <title id="title">AtomLens Relay Architecture</title>
+  <desc id="desc">Architecture diagram for the owned real-time video support platform.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#007f73"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#182522" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #f5f8f7; }
+      .card { fill: #ffffff; stroke: #dce5e2; stroke-width: 2; filter: url(#shadow); }
+      .server { fill: #e4f5f2; stroke: #007f73; stroke-width: 2; filter: url(#shadow); }
+      .store { fill: #fbfdfc; stroke: #9fb9b4; stroke-width: 2; }
+      .title { font: 800 34px Inter, Segoe UI, Arial, sans-serif; fill: #182522; }
+      .h { font: 800 22px Inter, Segoe UI, Arial, sans-serif; fill: #182522; }
+      .t { font: 600 16px Inter, Segoe UI, Arial, sans-serif; fill: #61716d; }
+      .tiny { font: 700 13px Inter, Segoe UI, Arial, sans-serif; fill: #61716d; }
+      .flow { stroke: #007f73; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .flow-soft { stroke: #9fb9b4; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1280" height="820"/>
+  <text class="title" x="64" y="72">AtomLens Relay</text>
+  <text class="t" x="64" y="104">Owned browser video support platform with server-routed media, history, recording, admin, and metrics.</text>
+
+  <rect class="card" x="64" y="170" rx="8" width="250" height="140"/>
+  <text class="h" x="92" y="220">Agent Browser</text>
+  <text class="t" x="92" y="252">Create session</text>
+  <text class="t" x="92" y="278">Camera, mic, chat, files</text>
+
+  <rect class="card" x="64" y="470" rx="8" width="250" height="140"/>
+  <text class="h" x="92" y="520">Customer Browser</text>
+  <text class="t" x="92" y="552">Join by invite token</text>
+  <text class="t" x="92" y="578">Camera, mic, chat, files</text>
+
+  <rect class="server" x="440" y="210" rx="8" width="400" height="330"/>
+  <text class="h" x="480" y="260">Node Relay Server</text>
+  <text class="t" x="480" y="294">HTTP API and static app</text>
+  <text class="t" x="480" y="326">Custom WebSocket relay</text>
+  <text class="t" x="480" y="358">Role token enforcement</text>
+  <text class="t" x="480" y="390">Presence and reconnect grace</text>
+  <text class="t" x="480" y="422">Chat, files, media chunks</text>
+  <text class="t" x="480" y="454">Recording package worker</text>
+  <text class="t" x="480" y="486">Prometheus metrics</text>
+
+  <rect class="store" x="940" y="164" rx="8" width="260" height="104"/>
+  <text class="h" x="974" y="208">Session Store</text>
+  <text class="tiny" x="974" y="236">data/store.json</text>
+
+  <rect class="store" x="940" y="318" rx="8" width="260" height="104"/>
+  <text class="h" x="974" y="362">Upload Store</text>
+  <text class="tiny" x="974" y="390">data/uploads</text>
+
+  <rect class="store" x="940" y="472" rx="8" width="260" height="104"/>
+  <text class="h" x="974" y="516">Recording Store</text>
+  <text class="tiny" x="974" y="544">data/recordings/*.tar</text>
+
+  <rect class="card" x="466" y="646" rx="8" width="170" height="90"/>
+  <text class="h" x="494" y="686">Admin UI</text>
+  <text class="tiny" x="494" y="714">End sessions</text>
+
+  <rect class="card" x="704" y="646" rx="8" width="170" height="90"/>
+  <text class="h" x="732" y="686">/metrics</text>
+  <text class="tiny" x="732" y="714">Monitor scrape</text>
+
+  <path class="flow" d="M314 238 C360 238 384 286 436 286"/>
+  <text class="tiny" x="332" y="222">WebSocket media/chat</text>
+
+  <path class="flow" d="M314 540 C362 540 388 462 436 462"/>
+  <text class="tiny" x="326" y="580">WebSocket media/chat</text>
+
+  <path class="flow-soft" d="M840 250 C880 230 900 216 936 216"/>
+  <path class="flow-soft" d="M840 370 C880 370 900 370 936 370"/>
+  <path class="flow-soft" d="M840 492 C880 512 900 524 936 524"/>
+
+  <path class="flow-soft" d="M552 646 L552 548"/>
+  <path class="flow-soft" d="M790 646 L790 548"/>
+
+  <text class="tiny" x="474" y="152">Media never goes peer-to-peer or through a hosted video API.</text>
+  <path class="flow-soft" d="M188 310 C190 390 190 410 188 470"/>
+  <text class="tiny" x="84" y="398">Invite link/token</text>
+</svg>

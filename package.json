@@ -1,0 +1,22 @@
+{
+  "name": "atomlens-relay",
+  "version": "1.0.0",
+  "description": "Owned real-time video support platform for AtomQuest Hackathon 1.0.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "video-support",
+    "websocket",
+    "customer-support",
+    "hackathon"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
