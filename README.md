@@ -64,6 +64,36 @@ Agent Password: atomlens123
 Admin Key: demo-admin-key
 ```
 
+## Contributing
+
+Contributions are welcome.
+
+### Steps to contribute
+
+1. Fork this repository
+2. Clone your fork
+3. Create a new branch
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+4. Make your changes
+5. Commit your changes
+
+```bash
+git add .
+git commit -m "Add your message"
+```
+
+6. Push the branch
+
+```bash
+git push origin feature/your-feature-name
+```
+
+7. Open a Pull Request
+
 ## License
 
 MIT
